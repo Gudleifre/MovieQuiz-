@@ -25,7 +25,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zbg-Z1-ofu">
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zbg-Z1-ofu">
                                 <rect key="frame" x="20" y="106" width="374" height="722"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qc1-b7-rTJ">
@@ -47,12 +47,12 @@
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6MI-qf-oxC" userLabel="Preview Image">
                                         <rect key="frame" x="0.0" y="43.5" width="374" height="561"/>
-                                        <color key="backgroundColor" name="YP White (iOS)"/>
+                                        <color key="backgroundColor" name="YP Black (iOS)"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="6MI-qf-oxC" secondAttribute="height" multiplier="2:3" id="Hvi-Qg-F8v"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма меньше, чем 5?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySG-FD-Dfm" userLabel="Question Label">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма больше, чем 7?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySG-FD-Dfm" userLabel="Question Label">
                                         <rect key="frame" x="0.0" y="624.5" width="374" height="17.5"/>
                                         <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="23"/>
                                         <color key="textColor" name="YP White (iOS)"/>
@@ -95,17 +95,24 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="QlQ-7i-l7H">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black (iOS)"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zbg-Z1-ofu" secondAttribute="trailing" constant="20" id="9yC-p1-ozv"/>
+                            <constraint firstItem="QlQ-7i-l7H" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Xle-Ak-zoT"/>
                             <constraint firstItem="zbg-Z1-ofu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="eLT-kK-7Bk"/>
                             <constraint firstItem="zbg-Z1-ofu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="p9j-JZ-9wq"/>
+                            <constraint firstItem="QlQ-7i-l7H" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pcd-Sx-TMS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zbg-Z1-ofu" secondAttribute="bottom" id="xaT-Ci-FCc"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="QlQ-7i-l7H" id="Sjg-ao-dgZ"/>
+                        <outlet property="contentView" destination="zbg-Z1-ofu" id="mfq-pG-8VO"/>
                         <outlet property="counterLabel" destination="W9d-xe-c6u" id="pIh-rb-7M6"/>
                         <outlet property="imageView" destination="6MI-qf-oxC" id="Eh1-Ma-hB9"/>
                         <outlet property="noButton" destination="UXV-rv-hSs" id="6Kf-y8-lvT"/>

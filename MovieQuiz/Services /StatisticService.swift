@@ -27,12 +27,7 @@ final class StatisticService: StatisticServiceProtocol {
     }
     
     var totalAccuracy: Double {
-        if totalQuestionsAsked > 0 {
-            let result = Double(totalCorrectAnswers) / Double(totalQuestionsAsked) * 100
-            return result
-        } else {
-            return 0
-        }
+        totalQuestionsAsked > 0 ? Double(totalCorrectAnswers) / Double(totalQuestionsAsked) * 100 : 0
     }
     
     private let storage: UserDefaults = .standard
@@ -40,7 +35,7 @@ final class StatisticService: StatisticServiceProtocol {
     private var totalQuestionsAsked: Int {
         gamesCount * 10
     }
-   
+    
     private var totalCorrectAnswers: Int{
         get {
             storage.integer(forKey: Keys.totalCorrectAnswers.rawValue)
@@ -51,14 +46,14 @@ final class StatisticService: StatisticServiceProtocol {
     }
     
     private enum Keys: String {
-        case gamesCount = "gamesCount"
-        case bestGameCorrect = "bestGameCorrect"
-        case bestGameTotal = "bestGameTotal"
-        case bestGameDate = "bestGameDate"
-        case totalCorrectAnswers = "totalCorrectAnswers"
-        case totalQuestionsAsked = "totalQuestionsAsked"
+        case gamesCount
+        case bestGameCorrect
+        case bestGameTotal
+        case bestGameDate
+        case totalCorrectAnswers
+        case totalQuestionsAsked
     }
-   
+    
     func store(correct count: Int, total amount: Int) {
         gamesCount += 1
         totalCorrectAnswers += count
