@@ -32,6 +32,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        activityIndicator.hidesWhenStopped = true
         contentView.isHidden = true
         showLoadingIndicator()
         
@@ -86,7 +87,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     func didLoadDataFromServer() {
         hideLoadingIndicator()
         contentView.isHidden = false
-        
         questionFactory?.requestNextQuestion()
     }
     
@@ -97,14 +97,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     // MARK: - Private Methods
     private func showLoadingIndicator() {
-        activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
     
     private func hideLoadingIndicator() {
         activityIndicator.stopAnimating()
-        activityIndicator.isHidden = true
-        
     }
     
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
@@ -200,7 +197,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
-            
             self.questionFactory?.requestNextQuestion()
         }
         
