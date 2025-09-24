@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController {
+final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol {
     // MARK: - Structs
     struct Fonts {
         static let ysDisplayMediumFontName = "YSDisplay-Medium"
@@ -27,7 +27,6 @@ final class MovieQuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter?.viewController = self
         presenter = MovieQuizPresenter(viewController: self)
         
         activityIndicator.hidesWhenStopped = true
@@ -62,13 +61,6 @@ final class MovieQuizViewController: UIViewController {
         imageView.layer.borderColor = isCorrectAnswer ? UIColor.ypGreenIOS.cgColor : UIColor.ypRedIOS.cgColor
     }
     
-    func show(quiz step: QuizStepViewModel) {
-        imageView.image = step.image
-        textLabel.text = step.question
-        counterLabel.text = step.questionNumber
-        
-    }
-    
     func showLoadingIndicator() {
         activityIndicator.startAnimating()
     }
@@ -88,6 +80,13 @@ final class MovieQuizViewController: UIViewController {
     
     func showContentView() {
         contentView.isHidden = false
+    }
+    
+    func show(quiz step: QuizStepViewModel) {
+        imageView.image = step.image
+        textLabel.text = step.question
+        counterLabel.text = step.questionNumber
+        
     }
     
     func show(quiz result: QuizResultsViewModel) {

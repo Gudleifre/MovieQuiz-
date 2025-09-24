@@ -1,19 +1,18 @@
 import UIKit
 
 final class MovieQuizPresenter: QuestionFactoryDelegate {
-    // MARK: - Public Properties
-    let questionsAmount: Int = 10
-    var correctAnswers = 0
-    var currentQuestion: QuizQuestion?
-    weak var viewController: MovieQuizViewController?
-    
     // MARK: - Private Properties
     private let statisticService: StatisticServiceProtocol?
-    private var currentQuestionIndex: Int = 0
     private var questionFactory: QuestionFactoryProtocol?
+    private weak var viewController: MovieQuizViewControllerProtocol?
+    
+    private let questionsAmount: Int = 10
+    private var correctAnswers: Int = 0
+    private var currentQuestion: QuizQuestion?
+    private var currentQuestionIndex: Int = 0
     
     // MARK: - Initializers
-    init(viewController: MovieQuizViewController) {
+    init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         
         statisticService = StatisticService()
@@ -85,38 +84,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         )
     }
     
-    func proceedWithAnswer(isCorrect: Bool) {
-        didAnswer(isCorrectAnswer: isCorrect)
-        
-        viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            
-            viewController?.toggleButtons(isEnabled: true)
-            viewController?.hideImageBorder()
-            
-            self.proceedToNextQuestionOrResults()
-        }
-    }
-    
-    func proceedToNextQuestionOrResults() {
-        if self.isLastQuestion() {
-            statisticService?.store(correct: correctAnswers, total: self.questionsAmount)
-            
-            let viewModel = QuizResultsViewModel(
-                title: "Этот раунд окончен!",
-                text: alertText(),
-                buttonText: "Сыграть еще раз")
-            
-            viewController?.show(quiz: viewModel)
-        } else {
-            self.switchToNextQuestion()
-            questionFactory?.requestNextQuestion()
-            
-        }
-    }
-    
     func alertText() -> String {
         guard let statisticService = statisticService else { return "" }
         
@@ -140,4 +107,38 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         
         proceedWithAnswer(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
+    
+    private func proceedWithAnswer(isCorrect: Bool) {
+        didAnswer(isCorrectAnswer: isCorrect)
+        
+        viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
+            
+            viewController?.toggleButtons(isEnabled: true)
+            viewController?.hideImageBorder()
+            
+            self.proceedToNextQuestionOrResults()
+        }
+    }
+    
+    private func proceedToNextQuestionOrResults() {
+        if self.isLastQuestion() {
+            statisticService?.store(correct: correctAnswers, total: self.questionsAmount)
+            
+            let viewModel = QuizResultsViewModel(
+                title: "Этот раунд окончен!",
+                text: alertText(),
+                buttonText: "Сыграть еще раз")
+            
+            viewController?.show(quiz: viewModel)
+        } else {
+            self.switchToNextQuestion()
+            questionFactory?.requestNextQuestion()
+            
+        }
+    }
 }
+
+
