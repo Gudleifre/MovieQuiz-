@@ -24,9 +24,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     // MARK: - QuestionFactoryDelegate
     func didReceiveNextQuestion(question: QuizQuestion?) {
-        guard let question = question else {
-            return
-        }
+        guard let question else { return }
         
         currentQuestion = question
         let viewModel = convert(model: question)
@@ -77,7 +75,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     func convert(model: QuizQuestion) -> QuizStepViewModel {
-        return QuizStepViewModel(
+        QuizStepViewModel(
             image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
@@ -114,7 +112,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             viewController?.toggleButtons(isEnabled: true)
             viewController?.hideImageBorder()
@@ -124,8 +122,8 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     private func proceedToNextQuestionOrResults() {
-        if self.isLastQuestion() {
-            statisticService?.store(correct: correctAnswers, total: self.questionsAmount)
+        if isLastQuestion() {
+            statisticService?.store(correct: correctAnswers, total: questionsAmount)
             
             let viewModel = QuizResultsViewModel(
                 title: "Этот раунд окончен!",
@@ -134,7 +132,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             
             viewController?.show(quiz: viewModel)
         } else {
-            self.switchToNextQuestion()
+            switchToNextQuestion()
             questionFactory?.requestNextQuestion()
             
         }

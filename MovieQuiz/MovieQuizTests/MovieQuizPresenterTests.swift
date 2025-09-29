@@ -1,5 +1,4 @@
 import XCTest
-
 @testable import MovieQuiz
 
 final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
