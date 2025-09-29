@@ -1,16 +1,19 @@
 import UIKit
 
 final class QuestionFactory: QuestionFactoryProtocol {
-    weak var delegate: QuestionFactoryDelegate?
+    // MARK: - Private Properties
+    private weak var delegate: QuestionFactoryDelegate?
     private let moviesLoader: MoviesLoading
     private var movies: [MostPopularMovie] = []
     private var isLoading = false
     
+    // MARK: - Initializers
     init(moviesLoader: MoviesLoading, delegate: QuestionFactoryDelegate?) {
         self.moviesLoader = moviesLoader
         self.delegate = delegate
     }
     
+    // MARK: - Public Methods
     func loadData() {
         guard !isLoading else { return }
         
@@ -66,6 +69,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
         }
     }
     
+    // MARK: - Private Methods
     private func loadImageData(for movie: MostPopularMovie, completion: @escaping (Data) -> Void) {
         DispatchQueue.global().async {
             var imageData = Data()
